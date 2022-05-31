@@ -13,34 +13,24 @@ class Ui_Dialog(object):
         Dialog.setObjectName("Dialog")
         Dialog.setEnabled(True)
         Dialog.resize(750, 820)
-        
         self.image = QtWidgets.QLabel(Dialog)
         self.image.setGeometry(QtCore.QRect(10, 170, 310, 131))
         self.image.setObjectName("image")
         self.image.setFrameShape(1)
-        
         self.groupBox = QtWidgets.QGroupBox(Dialog)
-        self.groupBox.setGeometry(QtCore.QRect(10, 40, 310, 111)) # pierwsze dwa to umiejscowienie a kolejne rozmiar prostokata
+        self.groupBox.setGeometry(QtCore.QRect(10, 40, 310, 111))
         self.groupBox.setObjectName("groupBox")
         self.groupBox.setStyleSheet("font-weight: bold")
         self.radioButton_WGS84 = QtWidgets.QRadioButton(self.groupBox)
         self.radioButton_WGS84.setGeometry(QtCore.QRect(50, 40, 95, 20))
         self.radioButton_WGS84.setAutoRepeat(False)
-        #self.radioButton_WGS84.setChecked(True)
         self.radioButton_WGS84.setObjectName("radioButton_WGS84")
         self.radioButton_GRS80 = QtWidgets.QRadioButton(self.groupBox)
         self.radioButton_GRS80.setGeometry(QtCore.QRect(50, 70, 95, 20))
         self.radioButton_GRS80.setObjectName("radioButton_GRS80")
-        #self.comboBox = QtWidgets.QComboBox(Dialog)
-        #self.comboBox.setGeometry(QtCore.QRect(60, 250, 181, 41))
-        #self.comboBox.setObjectName("comboBox")
-        #self.comboBox.addItem("")
-        #self.comboBox.addItem("")
         self.lineEdit_F = QtWidgets.QLineEdit(Dialog)
-        ##self.lineEdit_F.setEnabled(True)
         self.lineEdit_F.setGeometry(QtCore.QRect(10, 400, 141, 41))
         self.lineEdit_F.setObjectName("lineEdit_F")
-        # self.lineEdit_F.setStyleSheet("background-color: #D9DE27;")
         self.lineEdit_F.setStyleSheet("font-weight: bold")
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(10, 320, 320, 31))
@@ -49,12 +39,6 @@ class Ui_Dialog(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.label.setStyleSheet("font-weight: bold")
-        #self.label_2 = QtWidgets.QLabel(Dialog)
-        #self.label_2.setGeometry(QtCore.QRect(10, 190, 251, 51))
-        #font = QtGui.QFont()
-        #font.setPointSize(8)
-        #self.label_2.setFont(font)
-        #self.label_2.setObjectName("label_2")
         self.lineEdit_L = QtWidgets.QLineEdit(Dialog)
         self.lineEdit_L.setGeometry(QtCore.QRect(160, 400, 141, 41))
         self.lineEdit_L.setObjectName("lineEdit_L")
@@ -129,7 +113,6 @@ class Ui_Dialog(object):
         font = QtGui.QFont()
         font.setPointSize(14)
         self.wynikXY.setFont(font)
-        
         self.label_7 = QtWidgets.QLabel(Dialog)
         self.label_7.setEnabled(False)
         self.label_7.setGeometry(QtCore.QRect(260, 500, 191, 41))
@@ -152,26 +135,18 @@ class Ui_Dialog(object):
         self.pushButton.setGeometry(QtCore.QRect(280, 455, 126, 41))
         self.pushButton.setObjectName("pushButton")
         self.pushButton.setStyleSheet("font-weight: bold")
-        
-
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    
-        
-        
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.groupBox.setTitle(_translate("Dialog", "1. Elipsoida"))
         self.radioButton_WGS84.setText(_translate("Dialog", "WGS 84"))
         self.radioButton_GRS80.setText(_translate("Dialog", "GRS 80"))
-        #self.comboBox.setItemText(0, _translate("Dialog", "stopnie dziesiętne"))
-        #self.comboBox.setItemText(1, _translate("Dialog", "stopnie, minuty, sekundy"))
         self.label.setText(_translate("Dialog", "2. Wprowadz współrzędne w stopniach dziesietnych"))
-        #self.label_2.setText(_translate("Dialog", "1. Wybierz rodzaj wprowadzanych danych"))
-        self.label_3.setText(_translate("Dialog", "φ"))
-        self.label_4.setText(_translate("Dialog", "λ"))
+        self.label_3.setText(_translate("Dialog", "φ [°]"))
+        self.label_4.setText(_translate("Dialog", "λ [°]"))
         self.groupBox_2.setTitle(_translate("Dialog", "3. Współrzędne X,Y wynikowe"))
         self.radioButton_1992.setText(_translate("Dialog", "Układ PL-1992"))
         self.radioButton_2000.setText(_translate("Dialog", "Układ PL-2000"))
@@ -190,7 +165,7 @@ class Ui_Dialog(object):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog() # pamietac ze QtWidgets ma atrybut Dialog, nie Dialog
+    Dialog = QtWidgets.QDialog()
     ui = Ui_Dialog()
     ui.setupUi(Dialog)
     Dialog.show()

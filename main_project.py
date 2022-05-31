@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals # obsluga polskich znakÃ³w diaktrtycznych
 from PyQt5.QtGui import *
 import sys
@@ -7,16 +8,24 @@ from PyQt5.QtWidgets import QDialog, QApplication
 from project import * # import kodu pythona ze schematem GUI
 
 class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
-    def __init__(self): # self- czyli dla calej klasy
+    def __init__(self):
+        """
+        Konstruktor klasy z parametrem self, którym można poslugiwac się dla zmiennej, funkcji
+        w całej klasie. Konstruktor wywoływany jest przy każdym tworzeniu instancji, obiektu klasy.
+
+        Returns
+        -------
+        None.
+        """
         super().__init__()
         self.ui = Ui_Dialog() # ui = bierzemy wszystkie dane z pliku UI do PY project.py z klasy Ui_Program()
         self.ui.setupUi(self) # ustawiamy nasz user interface dla owego pliku main
         self.ui.image.setScaledContents(True)
-        obraz = (r'C:\Users\BRONX\OneDrive\Obrazy\philam.jpg')
+        obraz = ('philam.jpg')
         pixmap = QPixmap(obraz)
         self.ui.image.setPixmap(pixmap)
         self.ui.image.repaint()
-        self.setWindowIcon(QtGui.QIcon(r'C:\Users\BRONX\OneDrive\Obrazy\philam.jpg')) # gdy uzyjemy r to convertujemy ze string na raw string
+        self.setWindowIcon(QtGui.QIcon('philam.jpg')) # gdy uzyjemy r to convertujemy ze string na raw string
         self.setWindowTitle('PhiLam App')
         self.setStyleSheet("""
                            
@@ -28,7 +37,7 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
                            """)
         self.ui.radioButton_1992.toggled.connect(lambda:self.button_1992_state(self.ui.radioButton_1992))
         self.ui.radioButton_2000.toggled.connect(lambda:self.button_2000_state(self.ui.radioButton_2000))
-        self.ui.radioButton_H_yes.toggled.connect(lambda:self.button_H_state(self.ui.radioButton_H_yes))
+        self.ui.radioButton_H_yes.toggled.connect(lambda:self.H_yes_choice(self.ui.radioButton_H_yes))
         
         self.ui.radioButton_H_no.clicked.connect(lambda:self.H_no_choice(self.ui.radioButton_WGS84,self.ui.radioButton_GRS80,
                                                                             self.ui.radioButton_1992,self.ui.radioButton_5,self.ui.radioButton_6,self.ui.radioButton_7,self.ui.radioButton_8,
@@ -45,12 +54,11 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
   
     def button_2000_state(self, b):
         """
-        
+        Funkcja, która włącza widocznosc i umożliwia działanie groupBox_3. 
 
         Parameters
         ----------
-        b : TYPE
-            DESCRIPTION.
+        b : radioButton_2000 (QRadioButton)
 
         Returns
         -------
@@ -64,12 +72,11 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
             
     def button_1992_state(self, b):
         """
-        
+        Funkcja, która wyłącza widocznosc i umożliwia działanie groupBox_3.
 
         Parameters
         ----------
-        b : TYPE
-            DESCRIPTION.
+        b : radioButton_1992 (QRadioButton)
 
         Returns
         -------
@@ -81,15 +88,14 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
         else:
             self.ui.groupBox_3.setEnabled(True)
             
-    def button_H_state(self, b):
+    def H_yes_choice(self, b):
         """
-        
+        Funkcja, która włącza widocznosc i umożliwia działanie label_5 i lineEdit_H.
 
         Parameters
         ----------
-        b : TYPE
-            DESCRIPTION.
-
+        b : radioButton_H_yes (QRadioButton)
+           
         Returns
         -------
         None.
@@ -104,34 +110,22 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
             
     def H_no_choice(self,wgs,grs,b92,b5,b6,b7,b8,editF,editL,H_no,H_yes,editH):
         """
-        
+        Funkcja, która włącza widocznosc i umożliwia działanie pushButton.
 
         Parameters
         ----------
-        wgs : TYPE
-            DESCRIPTION.
-        grs : TYPE
-            DESCRIPTION.
-        b92 : TYPE
-            DESCRIPTION.
-        b5 : TYPE
-            DESCRIPTION.
-        b6 : TYPE
-            DESCRIPTION.
-        b7 : TYPE
-            DESCRIPTION.
-        b8 : TYPE
-            DESCRIPTION.
-        editF : TYPE
-            DESCRIPTION.
-        editL : TYPE
-            DESCRIPTION.
-        H_no : TYPE
-            DESCRIPTION.
-        H_yes : TYPE
-            DESCRIPTION.
-        editH : TYPE
-            DESCRIPTION.
+        wgs : radioButton_WGS84 (QRadioButton)
+        grs : radioButton_GRS80 (QRadioButton)
+        b92 : radioButton_1992 (QRadioButton)
+        b5 : radioButton_5 (QRadioButton)
+        b6 : radioButton_6 (QRadioButton)
+        b7 : radioButton_7 (QRadioButton)
+        b8 : radioButton_8 (QRadioButton)
+        editF : lineEdit_F (QLineEdit) stopnie dziesietne
+        editL : lineEdit_L (QLineEdit) stopnie dziesietne
+        H_no : radioButton_H_no (QRadioButton)
+        H_yes : radioButton_H_yes (QRadioButton)
+        editH : lineEdit_H (QLineEdit) metry
 
         Returns
         -------
@@ -141,38 +135,26 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
         if ((wgs.isChecked() or grs.isChecked())and(b92.isChecked() or b5.isChecked() or b6.isChecked() or b7.isChecked() or b8.isChecked())
             and(len(editF.text())!=0 and len(editL.text())!=0 and H_no.isChecked())):
             self.ui.pushButton.setEnabled(True)
-                 # or (len(editF.text())!=0 and len(editL.text())!=0 and H_yes.isChecked() and len(editH.text())!=0)):
+                 
              
     def H_line_choice(self,wgs,grs,b92,b5,b6,b7,b8,editF,editL,H_no,H_yes,editH):
         """
+        Funkcja, która włącza widocznosc i umożliwia działanie pushButton.
         
-
         Parameters
         ----------
-        wgs : TYPE
-            DESCRIPTION.
-        grs : TYPE
-            DESCRIPTION.
-        b92 : TYPE
-            DESCRIPTION.
-        b5 : TYPE
-            DESCRIPTION.
-        b6 : TYPE
-            DESCRIPTION.
-        b7 : TYPE
-            DESCRIPTION.
-        b8 : TYPE
-            DESCRIPTION.
-        editF : TYPE
-            DESCRIPTION.
-        editL : TYPE
-            DESCRIPTION.
-        H_no : TYPE
-            DESCRIPTION.
-        H_yes : TYPE
-            DESCRIPTION.
-        editH : TYPE
-            DESCRIPTION.
+        wgs : radioButton_WGS84 (QRadioButton)
+        grs : radioButton_GRS80 (QRadioButton)
+        b92 : radioButton_1992 (QRadioButton)
+        b5 : radioButton_5 (QRadioButton)
+        b6 : radioButton_6 (QRadioButton)
+        b7 : radioButton_7 (QRadioButton)
+        b8 : radioButton_8 (QRadioButton)
+        editF : lineEdit_F (QLineEdit) stopnie dziesietne
+        editL : lineEdit_L (QLineEdit) stopnie dziesietne
+        H_no : radioButton_H_no (QRadioButton)
+        H_yes : radioButton_H_yes (QRadioButton)
+        editH : lineEdit_H (QLineEdit) metry
 
         Returns
         -------
@@ -185,36 +167,30 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
     
     def Np(self,phi):
         """
+        Max. promień w I wertykale w kierunku głownym.
         
-
-        Parameters
+        Parametres
         ----------
-        phi : TYPE
-            DESCRIPTION.
-
+        phi : float - szerokosc geodezyjna [radians]
+        
         Returns
         -------
-        N : TYPE
-            DESCRIPTION.
-
+        N : float - promien w I wertykale [m]
         """
         N = self.a/sqrt(1-self.e2*sin(phi)**2)
         return N
     
     def sigma(self,phi):
         """
+        Wartosc sigmy.
         
-
-        Parameters
-        ----------
-        phi : TYPE
-            DESCRIPTION.
-
-        Returns
-        -------
-        si : TYPE
-            DESCRIPTION.
-
+        Paramtetres:
+        -----------
+        phi - float - szerokosc elipsoidalna [radians]
+        
+        Returns:
+        --------
+        si - float - sigma
         """
         A0 = 1-(self.e2/4)-((3*(self.e2**2))/64)-((5*(self.e2**3))/256);
         A2 = (3/8)*(self.e2+(self.e2**2/4)+((15*(self.e2**3))/128));
@@ -225,27 +201,17 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
     
     def pl2xy_gk(self,phi,l,L0):
         """
+        Transformacja wspolrzednych geodezyjnych na wspolrzedne w układzie Gaussa-Krugera
+        Parametres:
+        pji,l - float - szerokosc oraz dlugosc geodezyjna [stopnie dziesietne]
+        L0 - float - poludnik osiowy [radians]
         
-
-        Parameters
-        ----------
-        phi : TYPE
-            DESCRIPTION.
-        l : TYPE
-            DESCRIPTION.
-        L0 : TYPE
-            DESCRIPTION.
-
-        Returns
-        -------
-        xgk : TYPE
-            DESCRIPTION.
-        ygk : TYPE
-            DESCRIPTION.
-
+        Returns:
+        xgk,ygk - float - wspolrzedne w ukladzie Gaussa-Krugera [m]
+        
         """
-        phi=phi*pi/180
-        l=l*pi/180
+        phi = phi*pi/180
+        l = l*pi/180
         b2 = (self.a**2)*(1-self.e2);
         epr2 = ((self.a**2)-(b2))/(b2);
         t = tan(phi);
@@ -262,22 +228,14 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
     
     def u1992(self,xgk,ygk):
         """
+        Transformacja współrzędnych w układzie Gaussa-Krugera do układu PL-1992
+        Parametres:
+        -----------
+        xgk,ygk - float - współrzędne w układzie Gaussa-Krugera [m]
         
-
-        Parameters
-        ----------
-        xgk : TYPE
-            DESCRIPTION.
-        ygk : TYPE
-            DESCRIPTION.
-
-        Returns
-        -------
-        x : TYPE
-            DESCRIPTION.
-        y : TYPE
-            DESCRIPTION.
-
+        Returns:
+        --------
+        x,y - float - współrzędne w układzie PL-1992 [m]
         """
         x = xgk * 0.9993 - 5300000
         y = ygk * 0.9993 + 500000
@@ -285,24 +243,15 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
     
     def u2000(self,xgk,ygk,L0):
         """
+        Transformacja współrzędnych w układzie Gaussa-Krugera do układu PL-2000
+        Parametres:
+        -----------
+        xgk,ygk - float - współrzędne w układzie Gaussa-Krugera [m]
+        L0 - float - poludnik osiowy [radians]
         
-
-        Parameters
-        ----------
-        xgk : TYPE
-            DESCRIPTION.
-        ygk : TYPE
-            DESCRIPTION.
-        L0 : TYPE
-            DESCRIPTION.
-
-        Returns
-        -------
-        x : TYPE
-            DESCRIPTION.
-        y : TYPE
-            DESCRIPTION.
-
+        Returns:
+        --------
+        x,y - float - współrzędne w układzie PL-2000 [m]
         """
         x = xgk * 0.999923
         y = ygk * 0.999923 + (L0*180/pi/3) * 1000000 + 500000
@@ -310,48 +259,39 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
     
     def plh2xyz(self,P,L,H):
         """
+        Transformacja odwrotna do algorytmu Hirvonena- transformacja współrzędnych geodezyjnych:
+        szerokosc, dlugosc i wysokosc elipsoidalna na współrzędne ortokartezjańskie X,Y,Z
         
-
-        Parameters
+        Parametres:
         ----------
-        P : TYPE
-            DESCRIPTION.
-        L : TYPE
-            DESCRIPTION.
-        H : TYPE
-            DESCRIPTION.
-
-        Returns
-        -------
-        X : TYPE
-            DESCRIPTION.
-        Y : TYPE
-            DESCRIPTION.
-        Z : TYPE
-            DESCRIPTION.
-
+        P,L,H - float - szerokosc, dlugosc oraz wysokosc elipsoidalna [stopnie dziesietne i metry]
+        
+        Returns:
+        --------
+        X,Y,Z - float - wspolrzedne ortokartezjańskie [m]
+        
         """
-         P = P*pi/180
-         L = L*pi/180
-         N = self.Np(P)
-         X = (N+H)*cos(P)*cos(L)
-         Y = (N+H)*cos(P)*sin(L)
-         Z = (N*(1 -self.e2 )+H)*sin(P)
-         return X,Y,Z
-    # glowna ostatnia funkcja
+        P = P*pi/180
+        L = L*pi/180
+        N = self.Np(P)
+        X = (N+H)*cos(P)*cos(L)
+        Y = (N+H)*cos(P)*sin(L)
+        Z = (N*(1 -self.e2 )+H)*sin(P)
+        return X,Y,Z
+     
+     
     def isFloat(self,string):
         """
+        Funkcja sprawdzająca czy podany ciąg znaków jest liczbą (float).
         
-
         Parameters
         ----------
-        string : TYPE
-            DESCRIPTION.
-
+        string : string
+        na przykład "AlaMaKota" lub "15.78"
+        
         Returns
         -------
-        bool
-            DESCRIPTION.
+        bool (True or False)
 
         """
     
@@ -363,49 +303,37 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
             
     def pushButton_choice(self,wgs,grs,b92,b5,b6,b7,b8,editF,editL,H_no,H_yes,editH,wynikXY,wynikXYZ,b00):
         """
+        Główna funkcja programu pozwalająca użytkownikowi na obliczenie współrzędnych ((I) na podstawie wyboru elipsoidy, (II) wprowadzonych współrzędnych
+        fi, lambda, (III) wyboru układu dla współrzędnych wynikowych oraz (IV) potencjalnego wyboru wprowadzenia wysokosci elipsoidalnej) 
+        w układzie PL-2000, PL-1992 lub w układzie współrzędnych ortokartezjańskich XYZ [m].
         
-
         Parameters
         ----------
-        wgs : TYPE
-            DESCRIPTION.
-        grs : TYPE
-            DESCRIPTION.
-        b92 : TYPE
-            DESCRIPTION.
-        b5 : TYPE
-            DESCRIPTION.
-        b6 : TYPE
-            DESCRIPTION.
-        b7 : TYPE
-            DESCRIPTION.
-        b8 : TYPE
-            DESCRIPTION.
-        editF : TYPE
-            DESCRIPTION.
-        editL : TYPE
-            DESCRIPTION.
-        H_no : TYPE
-            DESCRIPTION.
-        H_yes : TYPE
-            DESCRIPTION.
-        editH : TYPE
-            DESCRIPTION.
-        wynikXY : TYPE
-            DESCRIPTION.
-        wynikXYZ : TYPE
-            DESCRIPTION.
-        b00 : TYPE
-            DESCRIPTION.
+        wgs : radioButton_WGS84 (QRadioButton)
+        grs : radioButton_GRS80 (QRadioButton)
+        b92 : radioButton_1992 (QRadioButton)
+        b5 : radioButton_5 (QRadioButton)
+        b6 : radioButton_6 (QRadioButton)
+        b7 : radioButton_7 (QRadioButton)
+        b8 : radioButton_8 (QRadioButton)
+        editF : lineEdit_F (QLineEdit) stopnie dziesietne
+        editL : lineEdit_L (QLineEdit) stopnie dziesietne
+        H_no : radioButton_H_no (QRadioButton)
+        H_yes : radioButton_H_yes (QRadioButton)
+        editH : lineEdit_H (QLineEdit) metry
+        wynikXY : wynikXY (QLabel)
+        wynikXYZ : wynikXYZ (QLabel)
+        b00 : radioButton_2000 (QRadioButton)
 
         Raises
         ------
         TypeError
-            DESCRIPTION.
+            Błąd wyswietlający się po niewprowadzeniu współrzędnych, wprowadzeniu ciągu znaków lub niewprowadzeniu wysokosci elipsoidalnej.
         ValueError
-            DESCRIPTION.
+            Błąd wyswietlający się po wprowadzeniu współrzędnych punktu nieznajdującego się w Polsce lub wybraniu błędnej strefy dla wprowadzonej
+            wartosci lambdy.
         SystemError
-            DESCRIPTION.
+            Błąd wyswietlający się po niewybraniu układu dla współrzędnych wynikowych.
 
         Returns
         -------
@@ -466,7 +394,7 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
         elif b92.isChecked(False) and self.ui.radioButton_2000.isChecked(False):
             wynikXY.setText(f'Nie wybrano układu dla współrzędnych wynikowych')
             raise SystemError(f'Nie wybrano układu dla współrzędnych wynikowych')
-            
+        
             
         if H_yes.isChecked():
             self.ui.label_7.setEnabled(False)
@@ -475,7 +403,7 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
                 if self.isFloat(editH.text()):
                     self.H = float(editH.text())
                     self.X_or, self.Y_or, self.Z_or = self.plh2xyz(self.F_deg, self.L_deg, self.H)
-                    wynikXYZ.setText(f'X: {self.X_or:.3f}, Y: {self.Y_or:.3f}, Z: {self.Z_or:.3f}')
+                    wynikXYZ.setText(f'X: {self.X_or:.3f} m, Y: {self.Y_or:.3f} m, Z: {self.Z_or:.3f} m')
                     wynikXY.setText(f'')
                 else:
                     wynikXYZ.setText('Wprowadzono ciąg znaków zamiast H')
@@ -489,12 +417,17 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
             self.X_gk, self.Y_gk = self.pl2xy_gk(self.F_deg, self.L_deg, self.L0)
             if b92.isChecked():
                 self.X, self.Y = self.u1992(self.X_gk, self.Y_gk)
-                wynikXY.setText(f'X 1992: {self.X:.3f}, Y 1992: {self.Y:.3f}')
+                wynikXY.setText(f'X 1992: {self.X:.3f} m, Y 1992: {self.Y:.3f} m')
                 wynikXYZ.setText(f'')
             if b00.isChecked():
-                self.X, self.Y = self.u2000(self.X_gk, self.Y_gk, self.L0)
-                wynikXY.setText(f'X 2000: {self.X:.3f}, Y 2000: {self.Y:.3f}')
-                wynikXYZ.setText(f'')
+                self.dx = self.L_deg - self.L0*180/pi
+                if self.dx > 1.5 or self.dx < -1.5:
+                    wynikXY.setText(f'Dla podanej lambda wybrano błędną strefę')
+                    raise ValueError(f'Dla podanej lambda wybrano błędną strefę')
+                else:
+                    self.X, self.Y = self.u2000(self.X_gk, self.Y_gk, self.L0)
+                    wynikXY.setText(f'X 2000: {self.X:.3f} m, Y 2000: {self.Y:.3f} m')
+                    wynikXYZ.setText(f'')
             
             
 if __name__ == "__main__":
