@@ -332,8 +332,6 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
         ValueError
             Błąd wyswietlający się po wprowadzeniu współrzędnych punktu nieznajdującego się w Polsce lub wybraniu błędnej strefy dla wprowadzonej
             wartosci lambdy.
-        SystemError
-            Błąd wyswietlający się po niewybraniu układu dla współrzędnych wynikowych.
 
         Returns
         -------
@@ -391,10 +389,6 @@ class MyForm(QDialog): # wiec QDialog to klasa parent,, nadrzedna
             self.L0 = 21*pi/180
         elif b8.isChecked():
             self.L0 = 24*pi/180
-        elif b92.isChecked(False) and self.ui.radioButton_2000.isChecked(False):
-            wynikXY.setText(f'Nie wybrano układu dla współrzędnych wynikowych')
-            raise SystemError(f'Nie wybrano układu dla współrzędnych wynikowych')
-        
             
         if H_yes.isChecked():
             self.ui.label_7.setEnabled(False)
